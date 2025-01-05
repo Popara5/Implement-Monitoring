@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2021-07-01",
+      "name": "az104-11-vm0",
+      "location": "[parameters('location')]",
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_DS1_v2"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "18.04-LTS",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('nicName'))]"
+            }
+          ]
+        },
+        "osProfile": {
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        }
+      }
+    }
+  ],
+  "resourcesName": "az104-rg11"
+}
